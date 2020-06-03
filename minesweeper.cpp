@@ -49,10 +49,10 @@ int checkArea(int x, int y, string aBoard[][30]){
     return count;
 
 }
-int checkPlaying(string playerBoard[][30]){
+int checkPlaying(string playerBoard[][30],string answerBoard[][30]){
     for(int i=0;i<bSize;i++){
         for (int j=0;j<bSize;j++){
-            if(playerBoard[i][j]=="-"){
+            if(playerBoard[i][j]=="-" && answerBoard[i][j]!="*" ){
                 return 0;
             }
         }
@@ -66,6 +66,18 @@ int playMineSweeper(string answerBoard[][30],string playerBoard[][30]){
     while(playing){
         while (playerBoard[row][col]!="-"){
             cout << "You've already selected that position. Try a new position" << endl;
+            cout << "Please choose a row" << endl;
+            cin >> row;
+            while(row>=bSize || row<0){
+                cout << "Row out of bound. Choose a new row" << endl;
+                cin >> row;
+            }
+            cout << "Please choose a column" << endl;
+            cin >> col;
+            while(col>=bSize || col<0){
+                cout << "Column out of bound. Choose a new Column." << endl;
+                cin >> col;
+            }
         }
         if(answerBoard[row][col]=="*")
         {
@@ -78,7 +90,7 @@ int playMineSweeper(string answerBoard[][30],string playerBoard[][30]){
             playerBoard[row][col]=to_string(bmbAround);
             display(playerBoard);
         }
-        int finish=checkPlaying(playerBoard);
+        int finish=checkPlaying(playerBoard,answerBoard);
         if(finish){
             return 1;
         }
